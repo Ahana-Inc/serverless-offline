@@ -24,7 +24,6 @@ describe('HttpApi Cors Tests', () => {
       method: 'OPTIONS',
       headers: {
         origin: 'http://www.mytestapp.com',
-        'x-not-origin': 'my big test',
         'access-control-request-headers': 'authorization,content-type',
         'access-control-request-method': 'GET',
       },

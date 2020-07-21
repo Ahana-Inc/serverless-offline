@@ -20,6 +20,7 @@ import debugLog from '../../debugLog.js'
 import serverlessLog, { logRoutes } from '../../serverlessLog.js'
 import {
   detectEncoding,
+  getHttpApiCorsConfig,
   jsonPath,
   splitHandlerPathAndName,
   generateHapiPath,
@@ -93,11 +94,16 @@ export default class HttpServer {
           this.#serverless.service.provider.httpApi &&
           this.#serverless.service.provider.httpApi.cors
         ) {
-          const httpApiCors = this.#serverless.service.provider.httpApi.cors
+          const httpApiCors = getHttpApiCorsConfig(
+            this.#serverless.service.provider.httpApi.cors,
+          )
 
           if (request.method === 'options') {
             response.statusCode = 204
-            if (!httpApiCors.allowedOrigins.includes(request.headers.origin)) {
+            if (
+              httpApiCors.allowedOrigins !== '*' &&
+              !httpApiCors.allowedOrigins.includes(request.headers.origin)
+            ) {
               return h.continue
             }
           }
@@ -385,7 +391,9 @@ export default class HttpServer {
       this.#serverless.service.provider.httpApi &&
       this.#serverless.service.provider.httpApi.cors
     ) {
-      const httpApiCors = this.#serverless.service.provider.httpApi.cors
+      const httpApiCors = getHttpApiCorsConfig(
+        this.#serverless.service.provider.httpApi.cors,
+      )
       cors = {
         origin: httpApiCors.allowedOrigins || [],
         credentials: httpApiCors.allowCredentials,
