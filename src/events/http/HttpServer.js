@@ -116,10 +116,10 @@ export default class HttpServer {
           if (httpApiCors.maxAge) {
             response.headers['access-control-max-age'] = httpApiCors.maxAge
           }
-          if (httpApiCors.exposeHeaders) {
+          if (httpApiCors.exposedResponseHeaders) {
             response.headers[
               'access-control-expose-headers'
-            ] = httpApiCors.exposeHeaders.join(',')
+            ] = httpApiCors.exposedResponseHeaders.join(',')
           }
           if (httpApiCors.allowedMethods) {
             response.headers[
@@ -150,6 +150,11 @@ export default class HttpServer {
             if (request.headers['access-control-request-method']) {
               response.headers['access-control-allow-methods'] =
                 request.headers['access-control-request-method']
+            }
+
+            if (request.headers['access-control-expose-headers']) {
+              response.headers['access-control-expose-headers'] =
+                request.headers['access-control-expose-headers']
             }
           }
 
@@ -397,7 +402,7 @@ export default class HttpServer {
       cors = {
         origin: httpApiCors.allowedOrigins || [],
         credentials: httpApiCors.allowCredentials,
-        exposedHeaders: httpApiCors.exposeHeaders || [],
+        exposedHeaders: httpApiCors.exposedResponseHeaders || [],
         maxAge: httpApiCors.maxAge,
         headers: httpApiCors.allowedHeaders || [],
       }

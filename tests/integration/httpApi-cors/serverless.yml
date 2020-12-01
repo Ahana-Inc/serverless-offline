@@ -18,7 +18,7 @@ provider:
         - http://www.myothertestapp.com
       allowCredentials: true
       maxAge: 60 # In seconds
-      exposeHeaders:
+      exposedResponseHeaders:
         - status
         - origin
       allowedMethods:

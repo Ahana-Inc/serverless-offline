@@ -15,9 +15,9 @@ export default {
     usage:
       'Used to override the Access-Control-Allow-Credentials default (which is true) to false.',
   },
-  corsExposedHeaders: {
+  corsExposedResponseHeaders: {
     usage:
-      'USed to build the Access-Control-Exposed-Headers response header for CORS support',
+      'Used to build the Access-Control-Exposed-Headers response header for CORS support',
   },
   disableCookieValidation: {
     usage: 'Used to disable cookie-validation on hapi.js-server',
