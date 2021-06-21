@@ -23,13 +23,22 @@ export default class LambdaProxyIntegrationEvent {
   #request = null
   #stage = null
   #stageVariables = null
+  #additionalRequestContext = null
 
-  constructor(request, stage, path, stageVariables, routeKey = null) {
+  constructor(
+    request,
+    stage,
+    path,
+    stageVariables,
+    routeKey = null,
+    additionalRequestContext = null,
+  ) {
     this.#path = path
     this.#routeKey = routeKey
     this.#request = request
     this.#stage = stage
     this.#stageVariables = stageVariables
+    this.#additionalRequestContext = additionalRequestContext || {}
   }
 
   create() {
@@ -191,6 +200,7 @@ export default class LambdaProxyIntegrationEvent {
           userAgent: _headers['user-agent'] || '',
           userArn: 'offlineContext_userArn',
         },
+        operationName: this.#additionalRequestContext.operationName,
         path: this.#path,
         protocol: 'HTTP/1.1',
         requestId: createUniqueId(),

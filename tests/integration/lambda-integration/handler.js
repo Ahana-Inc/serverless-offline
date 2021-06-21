@@ -13,3 +13,14 @@ exports.lambdaIntegrationStringified = async function lambdaIntegrationStringifi
     foo: 'bar',
   })
 }
+
+exports.lambdaIntegrationWithOperationName = async function lambdaIntegrationWithOperationName(
+  event,
+) {
+  return {
+    body: stringify({
+      operationName: event.requestContext.operationName,
+    }),
+    statusCode: 200,
+  }
+}

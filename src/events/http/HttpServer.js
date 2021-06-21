@@ -476,6 +476,11 @@ export default class HttpServer {
       }
     }
 
+    const additionalRequestContext = {}
+    if (httpEvent.operationId) {
+      additionalRequestContext.operationName = httpEvent.operationId
+    }
+
     hapiOptions.tags = ['api']
 
     const hapiHandler = async (request, h) => {
@@ -641,6 +646,7 @@ export default class HttpServer {
                 stage,
                 endpoint.routeKey,
                 stageVariables,
+                additionalRequestContext,
               )
             : new LambdaProxyIntegrationEvent(
                 request,
@@ -648,6 +654,7 @@ export default class HttpServer {
                 requestPath,
                 stageVariables,
                 endpoint.isHttpApi ? endpoint.routeKey : null,
+                additionalRequestContext,
               )
 
         event = lambdaProxyIntegrationEvent.create()
