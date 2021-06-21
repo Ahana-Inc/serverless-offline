@@ -716,6 +716,7 @@ describe('LambdaProxyIntegrationEvent', () => {
         stage,
         null,
         null,
+        null,
         { operationName: 'getFunctionOne' },
       ).create()
     })
